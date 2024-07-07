@@ -1,0 +1,13 @@
+{
+	"enable": false,
+	"handler": "handler",
+	"stage": "testStage",
+	"connect_handler": "connect_handler",
+	"disconnect_handler": "disconnect_handler",
+	"routekeys":[
+		{
+			"action": "testRoute",
+			"handler": "testRoute_handler"
+		}
+  ]
+}

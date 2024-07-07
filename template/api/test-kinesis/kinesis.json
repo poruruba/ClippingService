@@ -1,0 +1,7 @@
+[
+  {
+    "enable": false,
+    "StreamName": "test",
+    "IntervalSec": 1000
+  }
+]

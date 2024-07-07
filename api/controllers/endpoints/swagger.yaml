@@ -1,0 +1,24 @@
+paths:
+  /swagger:
+    get:
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+
+  /endpoints:
+    get:
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+
+  /sites:
+    get:
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object

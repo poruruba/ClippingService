@@ -1,0 +1,8 @@
+[
+  {
+    "enable": false,
+    "onetime": false,
+    "schedule": "0/10 * * * * *",
+    "param": "Hello World"
+  }
+]
