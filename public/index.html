@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src * 'unsafe-inline'; media-src *; img-src * data: content: blob:;">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="css/start.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spinkit/2.0.1/spinkit.min.css" />
+  <script src="js/methods_bootstrap.js"></script>
+  <script src="js/components_bootstrap.js"></script>
+  <script src="js/components_utils.js"></script>
+  <script src="js/vue_utils.js"></script>
+  <script src="js/gql_utils.js"></script>
+
+  <script src="js/remoteconsole.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vconsole/dist/vconsole.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuex@3.x/dist/vuex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-router@3.x/dist/vue-router.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="manifest.webmanifest" />
+  <script async src="https://cdn.jsdelivr.net/npm/pwacompat" crossorigin="anonymous"></script>
+
+  <title>クリッピング</title>
+</head>
+<body>
+<!--
+    <div id="loader-background">
+      <div class="sk-plane sk-center"></div>
+    </div>
+-->
+    <div id="top" class="container">
+      <div class="jumbotron">
+        <button class="btn btn-default btn-sm pull-right" v-on:click="apikey_config_open">APIキー</button>
+        <h2>クリッピング</h2>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading"><h2 class="panel-title">テキスト</h2></div>
+        <div class="panel-body">
+          <div class="input-group">
+            <span class="input-group-btn">
+              <button class="btn btn-default" v-on:click="text_upload">ｱｯﾌﾟﾛｰﾄﾞ</button>
+              <button class="btn btn-default" v-on:click="text_paste"><span class="glyphicon glyphicon-download-alt"></span></button>
+              <button class="btn btn-default" v-on:click="text_clear"><span class="glyphicon glyphicon-erase"></span></button>
+            </span>
+            <input type="text" class="form-control" v-model="input_text">
+          </div>
+          <br>
+          <div class="input-group">
+            <span class="input-group-btn">
+              <button class="btn btn-default" v-on:click="text_download">ﾀﾞｳﾝﾛｰﾄﾞ</button>
+              <button class="btn btn-default" v-on:click="text_copy"><span class="glyphicon glyphicon-arrow-up"></span></button>
+              <button class="btn btn-default" v-on:click="text_browser"><span class="glyphicon glyphicon-globe"></span></button>
+            </span>
+            <input type="text" class="form-control" v-model="output_text" readonly><br>
+          </div>
+          </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading"><h2 class="panel-title">ファイル</h2></div>
+        <div class="panel-body">
+          <comp_file id="upfile" v-bind:callback="file_callback"></comp_file><br>
+          <button class="btn btn-default" v-on:click="file_upload">ｱｯﾌﾟﾛｰﾄﾞ</button> <span v-if="uploaded_datetime!=0">{{toLocaleString(uploaded_datetime)}}</span><br>
+          <br>
+          <button class="btn btn-default" v-on:click="file_download">ﾀﾞｳﾝﾛｰﾄﾞ</button>
+        </div>
+      </div>
+
+
+      <div class="modal fade" id="apikey_config_dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              APIキーの設定
+            </div>
+            <div class="modal-body">
+              <input type="password" class="form-control" v-model="input_apikey">
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-default" v-on:click="dialog_close('#apikey_config_dialog')">キャンセル</button>
+              <button class="btn btn-default" v-on:click="apikey_config_save">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <router-view></router-view>
+      
+        <!-- for progress-dialog -->
+        <progress-dialog v-bind:title="progress_title"></progress-dialog>
+    </div>
+
+    <script src="js/store.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/start.js"></script>
+</body>
