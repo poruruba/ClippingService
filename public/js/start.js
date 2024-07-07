@@ -31,6 +31,10 @@ var vue_options = {
             this.dialog_close("#apikey_config_dialog");
         },
         text_browser: function(){
+            if(!this.output_text.startsWith('http://') && !this.output_text.startsWith('https://')){
+                this.toast_show('URLではありません。');
+                return;
+            }
             window.open(this.output_text, '_blank');
         },
         text_clear: function(){
