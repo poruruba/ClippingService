@@ -63,8 +63,8 @@
               <button class="btn btn-default" v-on:click="text_paste"><span class="glyphicon glyphicon-download-alt"></span></button>
               <button class="btn btn-default" v-on:click="text_clear"><span class="glyphicon glyphicon-erase"></span></button>
             </span>
-            <input type="text" class="form-control" v-model="input_text">
           </div>
+          <textarea class="form-control" v-model="input_text"></textarea>
           <br>
           <div class="input-group">
             <span class="input-group-btn">
@@ -72,8 +72,8 @@
               <button class="btn btn-default" v-on:click="text_copy"><span class="glyphicon glyphicon-arrow-up"></span></button>
               <button class="btn btn-default" v-on:click="text_browser"><span class="glyphicon glyphicon-globe"></span></button>
             </span>
-            <input type="text" class="form-control" v-model="output_text" readonly><br>
           </div>
+          <textarea class="form-control" v-model="output_text" readonly></textarea>
           </div>
       </div>
 
@@ -82,6 +82,8 @@
         <div class="panel-body">
           <comp_file id="upfile" v-bind:callback="file_callback"></comp_file><br>
           <button class="btn btn-default" v-on:click="file_upload">ｱｯﾌﾟﾛｰﾄﾞ</button> <span v-if="uploaded_datetime!=0">{{toLocaleString(uploaded_datetime)}}</span><br>
+          <br>
+          <button class="btn btn-default" v-on:click="file_check">ﾁｪｯｸ</button><br>
           <br>
           <button class="btn btn-default" v-on:click="file_download">ﾀﾞｳﾝﾛｰﾄﾞ</button>
         </div>
@@ -92,7 +94,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              APIキーの設定
+              <h4 class="modal-title">APIキーの設定</h4>
             </div>
             <div class="modal-body">
               <input type="password" class="form-control" v-model="input_apikey">
@@ -100,6 +102,25 @@
             <div class="modal-footer">
               <button class="btn btn-default" v-on:click="dialog_close('#apikey_config_dialog')">キャンセル</button>
               <button class="btn btn-default" v-on:click="apikey_config_save">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="file_check_dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">ファイル情報</h4>
+            </div>
+            <div class="modal-body">
+              <label>filename</label> {{file_check_result.filename}}<br>
+              <label>mimetype</label> {{file_check_result.mimetype}}<br>
+              <label>size</label> {{file_check_result.size}}<br>
+              <label>uploaded</label> {{toLocaleString(file_check_result.uploaded)}}<br>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-default" v-on:click="dialog_close('#file_check_dialog')">閉じる</button>
             </div>
           </div>
         </div>

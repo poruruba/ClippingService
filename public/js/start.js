@@ -17,6 +17,7 @@ var vue_options = {
         uploaded_datetime: 0,
         output_text: "",
         input_apikey: "",
+        file_check_result: {},
     },
     computed: {
     },
@@ -89,6 +90,20 @@ var vue_options = {
             console.log(files);
             if( files.length > 0 )
                 this.selected_file = files[0];
+        },
+        file_check: async function(){
+            var input = {
+                url: base_url + "/clipping-check-file",
+                api_key: this.apikey
+            };
+            var result = await do_http(input);
+            console.log(result);
+            if( result.error ){
+                alert(result.error);
+                return;
+            }
+            this.file_check_result = result;
+            this.dialog_open("#file_check_dialog");
         },
         file_upload: async function(){
             try{
