@@ -5,7 +5,7 @@ const Response = require(HELPER_BASE + 'response');
 const BinResponse = require(HELPER_BASE + 'binresponse');
 
 const API_KEY = process.env.CLIPPING_API_KEY || "123456";
-const SHARE_VALIDITY = 10 * 60 * 1000;
+const SHARE_VALIDITY = process.env.SHARE_VALIDITY || (10 * 60 * 1000);
 
 let share_text = null;
 let share_text_uploaded = 0;
@@ -60,6 +60,20 @@ exports.handler = async (event, context, callback) => {
 		if( share_file.originalname )
 			response.set_filename(share_file.originalname);
 		return response;
+	}else
+
+	if( event.path == '/clipping-check-file' ){
+		if( !share_file )
+			return new Response({ error: "ファイルがアップロードされていません。" });
+		var now = new Date().getTime();
+		if( (now - share_file_uploaded) > SHARE_VALIDITY )
+			return new Response({ error: "ファイルの有効期限が切れています。" });
+		return new Response({
+			filename: share_file.originalname,
+			mimetype: share_file.mimetype,
+			size: share_file.buffer.length,
+			uploaded: share_file_uploaded
+		})
 	}else
 
 	{

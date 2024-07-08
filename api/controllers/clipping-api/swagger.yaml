@@ -49,3 +49,19 @@ paths:
           description: Success
           schema:
             type: file
+
+  /clipping-check-file:
+    post:
+      security:
+        - apikeyAuth: []
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: upfile
+          type: file
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
