@@ -31,25 +31,28 @@ var vue_options = {
             this.apikey = this.input_apikey;
             this.dialog_close("#apikey_config_dialog");
         },
-        text_browser: function(){
+        text_output_browser: function(){
             if(!this.output_text.startsWith('http://') && !this.output_text.startsWith('https://')){
                 this.toast_show('URLではありません。');
                 return;
             }
             window.open(this.output_text, '_blank');
         },
-        text_clear: function(){
+        text_input_clear: function(){
             this.input_text = "";
         },
-        text_paste: async function(){
+        text_output_clear: function(){
+            this.output_text = "";
+        },
+        text_input_paste: async function(){
             this.input_text = await this.clip_paste();
             this.toast_show("クリップボードからペーストしました。");
         },
-        text_copy: async function(){
+        text_output_copy: async function(){
             await this.clip_copy(this.output_text);
             this.toast_show("クリップボードにコピーしました。");
         },
-        text_upload: async function(){
+        text_input_upload: async function(){
             try{
                 var input = {
                     url: base_url + "/clipping-set-text",
@@ -66,7 +69,7 @@ var vue_options = {
                 alert(error);
             }
         },
-        text_download: async function(){
+        text_output_download: async function(){
             try{
                 var input = {
                     url: base_url + "/clipping-get-text",
@@ -107,6 +110,11 @@ var vue_options = {
         },
         file_upload: async function(){
             try{
+                if( !this.selected_file ){
+                    alert("ファイルが選択されていません。");
+                    return;
+                }
+
                 var params = {
                     upfile: this.selected_file,
                     param: "param_value",
