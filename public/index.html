@@ -59,22 +59,23 @@
         <div class="panel-body">
           <div class="input-group">
             <span class="input-group-btn">
-              <button class="btn btn-default" v-on:click="text_upload">ｱｯﾌﾟﾛｰﾄﾞ</button>
-              <button class="btn btn-default" v-on:click="text_paste"><span class="glyphicon glyphicon-download-alt"></span></button>
-              <button class="btn btn-default" v-on:click="text_clear"><span class="glyphicon glyphicon-erase"></span></button>
+              <button class="btn btn-default" v-on:click="text_input_upload">ｱｯﾌﾟﾛｰﾄﾞ</button>
+              <button class="btn btn-default" v-on:click="text_input_paste"><span class="glyphicon glyphicon-download-alt"></span></button>
+              <button class="btn btn-default" v-on:click="text_input_clear"><span class="glyphicon glyphicon-erase"></span></button>
             </span>
           </div>
           <textarea class="form-control" v-model="input_text"></textarea>
           <br>
           <div class="input-group">
             <span class="input-group-btn">
-              <button class="btn btn-default" v-on:click="text_download">ﾀﾞｳﾝﾛｰﾄﾞ</button>
-              <button class="btn btn-default" v-on:click="text_copy"><span class="glyphicon glyphicon-arrow-up"></span></button>
-              <button class="btn btn-default" v-on:click="text_browser"><span class="glyphicon glyphicon-globe"></span></button>
+              <button class="btn btn-default" v-on:click="text_output_download">ﾀﾞｳﾝﾛｰﾄﾞ</button>
+              <button class="btn btn-default" v-on:click="text_output_copy"><span class="glyphicon glyphicon-arrow-up"></span></button>
+              <button class="btn btn-default" v-on:click="text_output_clear"><span class="glyphicon glyphicon-erase"></span></button>
+              <button class="btn btn-default" v-on:click="text_output_browser"><span class="glyphicon glyphicon-globe"></span></button>
             </span>
           </div>
           <textarea class="form-control" v-model="output_text" readonly></textarea>
-          </div>
+        </div>
       </div>
 
       <div class="panel panel-default">
