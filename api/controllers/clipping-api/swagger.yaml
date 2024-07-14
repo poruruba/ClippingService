@@ -1,4 +1,128 @@
 paths:
+  /clipping-webhook:
+    get:
+      responses:
+        200:
+          description: Success
+          schema:
+            type: string
+    post:
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+
+  /clipping-upload-persistent:
+    post:
+      security:
+        - apikeyAuth: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+
+  /clipping-temporary-persistent:
+    post:
+      security:
+        - apikeyAuth: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+
+  /clipping-share-persistent:
+    post:
+      security:
+        - apikeyAuth: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+
+  /clipping-delete-persistent:
+    post:
+      security:
+        - apikeyAuth: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+
+  /clipping-list-persistent:
+    post:
+      security:
+        - apikeyAuth: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+
+  /clipping-persistent-file:
+    post:
+      security:
+        - apikeyAuth: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+            
+  /clipping-share-file:
+    post:
+      security:
+        - apikeyAuth: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+
   /clipping-set-text:
     post:
       security:
