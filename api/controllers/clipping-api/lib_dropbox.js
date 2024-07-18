@@ -7,11 +7,36 @@ const fetch = require('node-fetch');
 const Headers = fetch.Headers;
 
 class Dropbox {
-  constructor(access_token) {
-    this.token = access_token;
+  constructor(client_id, client_secret, refresh_token){
+    this.client_id = client_id;
+    this.client_secret = client_secret;
+    this.refresh_token = refresh_token;
+    this.token_created = 0;
+  }
+
+  async retrieve_access_token(){
+    var now = new Date().getTime();
+    if( (now - this.token_created) >= (50 * 60 * 1000) ){
+      var input = {
+        url: dropbox_base_url + "/oauth2/token",
+        params : {
+          grant_type: "refresh_token",
+          refresh_token: this.refresh_token,
+          client_id: this.client_id,
+          client_secret: this.client_secret,
+        },
+        content_type: "multipart/form-data"
+      };
+      var result = await do_http(input);
+//      console.log(result);
+      this.token = result.access_token;
+      this.token_created = now;
+    }
+    return this.token;
   }
 
   async upload(path, buffer) {
+    await this.retrieve_access_token();
     var params = {
       path: path,
       mode: "overwrite",
@@ -23,13 +48,14 @@ class Dropbox {
       headers: {
         "Dropbox-API-Arg": JSON.stringify(params)
       },
-      token: this.token,
+      token: this.retrieve_access_token(),
     };
     var result = await do_http(input);
     return result;
   }
 
   async delete(path) {
+    await this.retrieve_access_token();
     var input = {
       url: dropbox_base_url + "/2/files/delete_v2",
       token: this.token,
@@ -42,6 +68,7 @@ class Dropbox {
   }
 
   async list() {
+    await this.retrieve_access_token();
     var input = {
       url: dropbox_base_url + "/2/files/list_folder",
       token: this.token,
@@ -70,6 +97,7 @@ class Dropbox {
   }
 
   async get_temporary_link(path) {
+    await this.retrieve_access_token();
     var input = {
       url: dropbox_base_url + "/2/files/get_temporary_link",
       token: this.token,
@@ -82,6 +110,7 @@ class Dropbox {
   }
 
   async create_share_links(path) {
+    await this.retrieve_access_token();
     var settings = {
       audience: "public",
       allow_download: true
@@ -100,6 +129,7 @@ class Dropbox {
   }
 
   async list_shared_links() {
+    await this.retrieve_access_token();
     var input = {
       url: dropbox_base_url + "/2/sharing/list_shared_links",
       token: this.token,
@@ -125,6 +155,7 @@ class Dropbox {
   }
 
   async make_create_request(path, title, description) {
+    await this.retrieve_access_token();
     var body = {
       title: title,
       description: description,
@@ -141,6 +172,7 @@ class Dropbox {
   }
 
   async close_request(id) {
+    await this.retrieve_access_token();
     var body = {
       id: id,
       open: false
@@ -165,6 +197,7 @@ class Dropbox {
   }
 
   async list_request() {
+    await this.retrieve_access_token();
     var input = {
       url: dropbox_base_url + "/2/file_requests/list_v2",
       token: this.token,

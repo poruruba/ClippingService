@@ -8,13 +8,15 @@ const TextResponse = require(HELPER_BASE + 'textresponse');
 const API_KEY = process.env.CLIPPING_API_KEY || "123456";
 const SHARE_VALIDITY = process.env.SHARE_VALIDITY || (10 * 60 * 1000);
 const UPLOAD_VALIDITY = process.env.UPLOAD_VALIDITY || (10 * 60 * 1000);
-const DROPBOX_ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN;
+const DROPBOX_CLIENT_ID = process.env.DROPBOX_CLIENT_ID;
+const DROPBOX_CLIENT_SECRET = process.env.DROPBOX_CLIENT_SECRET;
+const DROPBOX_REFRESH_TOKEN = process.env.DROPBOX_REFRESH_TOKEN;
 const UPLOAD_MAX_SIZE = process.env.UPLOAD_MAX_SIZE || (10 * 1024 * 1024);
 const UPLOAD_TITLE = "ファイルアップロード";
 const UPLOAD_DESCRIPTION = "ファイルをアップロードしてください。アップロードは１回までです。";
 
 const Dropbox = require('./lib_dropbox.js');
-const dropbox = new Dropbox(DROPBOX_ACCESS_TOKEN);
+const dropbox = new Dropbox(DROPBOX_CLIENT_ID, DROPBOX_CLIENT_SECRET, DROPBOX_REFRESH_TOKEN);
 
 let share_text = null;
 let share_text_uploaded = 0;
