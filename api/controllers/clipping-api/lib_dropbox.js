@@ -25,7 +25,7 @@ class Dropbox {
           client_id: this.client_id,
           client_secret: this.client_secret,
         },
-        content_type: "multipart/form-data"
+        content_type: "application/x-www-form-urlencoded"
       };
       var result = await do_http(input);
 //      console.log(result);
