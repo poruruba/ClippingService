@@ -48,7 +48,7 @@ class Dropbox {
       headers: {
         "Dropbox-API-Arg": JSON.stringify(params)
       },
-      token: this.retrieve_access_token(),
+      token: this.token,
     };
     var result = await do_http(input);
     return result;
